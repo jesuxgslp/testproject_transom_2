@@ -7,6 +7,11 @@ from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 
+from django.views.generic import TemplateView, View, ListView, UpdateView, DeleteView, CreateView
+from .models.Carro import Carro
+from .forms import *
+from django.urls import reverse_lazy
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -44,3 +49,9 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+
+class CreateCarro(CreateView):
+    template_name = 'app/create_carro.html'
+    model = Carro
+    form_class = CarroForm
+    success_url = reverse_lazy('index')
